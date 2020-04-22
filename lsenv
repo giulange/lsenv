@@ -1,0 +1,141 @@
+#!/bin/bash
+# DESCRIPTION:
+# Init the LandSupport GCI in DEV ENV / PROD
+# NOTES:
+# You have to launch THIS script from within the LandSupport/env/dev folder.
+# RICORDIAMOCI CHE @Francesco: 
+#   > aries ha iniziato a sviluppare, quindi prima di spegnere in DEV dovremmo avvisare in Telegram
+#   > prima di sovrascrivere la PROD vecchia, 
+#________________________________________________________________________________
+
+MYHOME=$(dirname $(readlink -f $0))
+filename=$(basename -- "$(readlink -f $0)")
+filename="${filename%.*}"
+
+if [ ! -f $MYHOME/lib/lsenv.func ]; then
+    echo -e "\n$MYHOME/lib/lsenv.func not found\n"
+    exit
+fi
+
+if [ ! -f $MYHOME/etc/lsenv.conf ]; then
+    echo -e "\n$MYHOME/etc/lsenv.conf not found\n"
+    exit
+fi
+
+. $MYHOME/etc/lsenv.conf --source-only
+. $MYHOME/lib/lsenv.func --source-only
+
+case $HOSTNAME in
+    $HOSTNAME_PROD)
+        ENV="prod"
+    ;;
+
+    $HOSTNAME_DEV)
+        ENV="dev"
+    ;;
+
+    *)
+        echo -e "sorry but this host is not configured\n" # { dev , prod } is case sensitive, reflects the name of folder!
+        exit
+    ;;
+esac
+
+if [ $(id -u -n) != "$USER_PROD" ] && [ $(id -u -n) != "$USER_DEV" ]; then
+    echo "Your are not the user selected in parameters!"
+    exit
+fi
+
+if ! [[ "$1" =~ ^(build|run|start|stop|drm|drmi|deploy)$ ]]; then
+    echo -e "\nUsage:  $filename COMMAND\n\nCommands:\n  build\n  run\n  start\n  stop\n  drm\n  drmi"
+    exit
+fi
+
+case $1 in
+
+    build | run | start | stop | drm | drmi)
+    command=$1
+    shift
+    args="$@"
+
+    if [ -z "$args" ]; then
+        args="all"
+    fi
+
+    echo -e "\n$command $args ?\n"
+
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes)
+            $command "$args"
+            break
+            ;;
+            No)
+            echo -e "\nbye!\n" 
+            break
+            ;;
+        esac
+    done
+    ;;
+
+    deploy) # CREARE ANCHE LA BACK-DEPLOY (ES. DA PROD A DEV)
+    stop "all"    # it's safe for postgres
+    
+    pushd $BRANCH_PATH > /dev/null
+    
+    if [ -d .git ]; then # riportare all aversione precedente passando il branch come argomento
+        BRANCH=$(git symbolic-ref --short HEAD)
+        echo -e "use $BRANCH branch"
+    else
+        echo -e "$BRANCH_PATH not a git repository"
+        popd
+        exit
+    fi
+
+    git checkout $BRANCH
+    popd > /dev/null
+
+    echo -e "\nre-build landsupport docker environment ?\n"
+    
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes)
+            stop "all"
+	    # if /media/GFTP/landsupport not exist then rebuild images
+            sync
+	    apply_sed # abilitarlo anche come comando
+	    run "all"
+            break
+            ;;
+            
+            No) 
+            break
+            ;;
+        esac
+    done
+
+  #  echo -e "\nbackup data ?\n"
+
+  #  select yn in "Yes" "No"; do
+  #      case $yn in
+  #          Yes) 
+  #          backup
+  #          break
+  #          ;;
+  #          
+  #          No) 
+  #          break
+  #          ;;
+  #      esac
+  #  done
+
+    ;;
+
+  *)
+
+    # AS BOOKMARK:
+    # to be done only if we need to run CUDA codes directly on the host machine,
+    # without using the Pre-processor [ToBeAdjusted]:
+    # sed -i 's/ariespace@192.168.20.11/*repalcement_user@replacement_ip*/g' *web_dir*/plugins/landsupport/dispatchmeta.php
+    ;;
+esac
+

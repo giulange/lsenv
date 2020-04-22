@@ -1,0 +1,4 @@
+# PostgreSQL [db/postgres] | postgis (Landsupport app database)
+# image="mdillon/postgis:9.5"
+
+docker load -i $DOCKER_IMAGES_PATH/${image}_save.tar.gz # docker pull $image

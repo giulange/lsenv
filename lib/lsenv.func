@@ -1,0 +1,309 @@
+#!/bin/bash
+
+# FUNCTIONS:
+apply_sed () {
+
+  if [ "$ENV" = "prod" ]; then
+    sed -i "s/$GEO_PUB_URL_DEV/$GEO_PUB_URL_PROD/g;s/$RAS_PUB_URL_DEV/$RAS_PUB_URL_PROD/g" $GUI_PATH/etc/custom.json $GUI_PATH/etc/datasets.json
+    #sed -i 's/\/home\/release/\/home\/lsprod/g' $GUI_PATH/plugins/landsupport/dispatchmeta.php         # app.landsupport.eu | APACHE:root 
+  fi
+
+  if [ "$ENV" = "dev" ]; then
+    sed -i "s/$GEO_PUB_URL_PROD/$GEO_PUB_URL_DEV/g;s/$RAS_PUB_URL_PROD/$RAS_PUB_URL_DEV/g" $GUI_PATH/etc/custom.json $GUI_PATH/etc/datasets.json
+
+    # apply the folder
+    #sed -i 's/\/home\/lsprod/\/home\/release/g' $GUI_PATH/plugins/landsupport/dispatchmeta.php         # dev.landsupport.eu | APACHE:root 
+    #sed -i 's/\/home\/lspord/\/home\/ariespace/g' $GUI_PATH_ARIES/plugins/landsupport/dispatchmeta.php # tmp.landsupport.eu | APACHE:tmp
+
+  fi
+  
+
+  # AS BOOKMARK:
+  # to be done only if we need to run CUDA codes directly on the host machine,
+  # without using the Pre-processor [ToBeAdjusted]:
+  # sed -i 's/ariespace@192.168.20.11/*repalcement_user@replacement_ip*/g' *web_dir*/plugins/landsupport/dispatchmeta.php
+}
+
+backup () {
+
+  if [ "$ENV" != "prod" ]; then
+    return
+  fi
+
+  now=`date +%Y-%m-%d.%H:%M:%S`
+
+  echo -e "backup in progress\nplease wait.."
+
+  if [ -d $DATA_PATH/ovecdata ]; then
+      sudo tar -czf /tmp/ovecdata-$now.tar.gz $DATA_PATH/ovecdata
+  fi
+
+  if [ -d $DATA_PATH/postgis-db ]; then
+      sudo tar -czf /tmp/postgis-db-$now.tar.gz $DATA_PATH/postgis-db
+  fi
+
+  echo "REMEMBER: check in /tmp yours ovecdata-$now and postgis-db-$now tar.gz backups"
+}
+
+build () {
+  check_dir_structure
+  
+  if [ "$1" = "all" ]; then
+    for f in $MYHOME/build/*.build
+    do
+      
+      container=${f%.build}
+      image=${f%.build}
+
+      options
+      drm $container
+      drmi $image
+
+      echo "build image $image"
+      . $MYHOME/build/$f --source-only # execute build script
+    
+    done
+  else 
+    for image in $1; do
+      
+      container=$image      
+      options
+      
+      if [ -f "$MYHOME/build/$image.build" ]; then
+
+        drm $container
+        drmi $image
+
+        echo "build image $image"
+        . $MYHOME/build/$image.build --source-only # execute build script
+
+      else
+        echo "$MYHOME/build/$image.build not found"
+      fi
+    done
+  fi
+}
+
+build_dir_structure () {
+  for dir in apache cubeR db docker_images ovecdata postgis-db rasdaman; do
+
+    if [ ! -d $DATA_PATH/$dir ]; then
+      dataerr+="${dir}\n"
+      #echo "$DATA_PATH/$dir not exist"
+      mkdir -p $DATA_PATH/$dir
+      #echo "$DATA_PATH/$dir created"
+    fi
+
+
+    if [ "$dir" == "apache" ]; then
+      for apache_dir in htdocs htdocs/rasterdata lib plugins resources; do
+        if [ ! -d $DATA_PATH/$dir/$apache_dir ]; then
+          dataerr+="${dir}/${apache_dir}\n"
+          mkdir -p $DATA_PATH/$dir/$apache_dir
+          #echo "apache subfolder: $apache_dir created"
+        fi
+      done
+    fi
+
+    if [ "$dir" == "db" ]; then
+      for db_dir in raster vector; do
+        if [ ! -d $DATA_PATH/$dir/$ras_dir ]; then
+          dataerr+="${dir}/${db_dir}\n"
+          mkdir -p $DATA_PATH/$dir/$db_dir
+          #echo "db subfolder: $db_dir created"
+        fi
+      done
+    fi
+
+    if [ "$dir" == "rasdaman" ]; then
+      for ras_dir in data data/TILES data/TRANSACTIONS etc log postgres secore secore/secoredb; do
+        if [ ! -d $DATA_PATH/$dir/$ras_dir ]; then
+          dataerr+="${dir}/${ras_dir}\n"
+          mkdir -p $DATA_PATH/$dir/$ras_dir
+          #echo "rasdaman subfolder: $ras_dir created"
+        fi
+      done
+    fi
+  done
+
+  if [ ! -z ${dataerr+x} ]; then
+    echo -e "please check content of this directories:\n\n$dataerr"
+    exit
+  fi
+}
+
+check_dir_structure () {
+  for dir in apache cubeR db docker_images ovecdata postgis-db rasdaman; do
+
+    if [ ! -d $DATA_PATH/$dir ]; then
+      dataerr+="\n${dir}"
+      echo "$DATA_PATH/$dir not exist"
+    fi
+  done
+
+  if [ ! -z ${dataerr+x} ]; then
+    echo -e "\n\nplease check content of this directories:$dataerr\n"
+    exit
+  fi
+}
+
+create_landsupport_bridge () {
+  docker network rm landsupport_bridge
+  docker network create --driver=bridge \
+  --subnet=172.18.0.0/16 \
+  --gateway=172.18.0.1 \
+  landsupport_bridge
+}
+
+drm () {
+  if [ "$1" = "all" ]; then
+    for f in $MYHOME/run/*.run
+    do
+      container=${f%.run}
+
+      if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
+        echo "remove container $container"
+        docker rm -f $container > /dev/null
+      fi
+    done
+  else
+    for container in $1; do
+      if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
+        echo "remove container $container"
+        docker rm -f $container > /dev/null
+      fi
+    done
+  fi
+}
+
+drmi () {
+  if [ "$1" = "all" ]; then
+    for f in $MYHOME/build/*.build
+    do
+      image=${f%.build}
+
+      options
+
+      if [ ! -z $(docker images -q $image) ]; then
+        echo "remove image $image"
+        docker rmi $image > /dev/null
+      fi
+    done
+  else
+    for image in $1; do
+
+      options
+
+      if [ ! -z $(docker images -q $image) ]; then
+        echo "remove image $image"
+        docker rmi $image > /dev/null
+      fi
+    done
+  fi
+}
+
+options () {
+  if [ "$container" = "rasdaman" ]; then
+    if [ "$ENV" = "dev" ]; then
+      #image+="-community"
+      image="$container-community"
+    fi
+
+    if [ "$ENV" = "prod" ]; then
+      #image+="-enterprise"
+      image="$container-enterprise"
+    fi
+  fi
+}
+
+run () {
+  check_dir_structure
+
+  if [ "$1" = "all" ]; then
+    for f in $MYHOME/run/*.run
+    do
+      container=${f%.build}
+      image=${f%.build}
+      
+      options
+      drm $container
+
+      echo "run container $container"
+      . $MYHOME/run/$f --source-only # execute run script
+      echo -e "\nShell:\ndocker exec -it --user root $container /bin/bash\n"
+    done
+  else
+    for container in $1; do
+      if [ -f "$MYHOME/run/$container.run" ]; then
+        image=$container
+
+	options
+        drm $container
+
+        echo "run container $container"
+        . $MYHOME/run/$container.run --source-only
+        echo -e "\nShell:\ndocker exec -it --user root $container /bin/bash\n"
+      else
+        echo "$MYHOME/run/$container.run not found"
+      fi
+    done
+  fi
+}
+
+start () {
+  if [ "$1" = "all" ]; then
+    for f in $MYHOME/run/*.run
+    do
+      container=${f%.run}
+      
+      if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
+        echo "start container $container"
+        docker start $container > /dev/null
+        echo -e "\nShell:\ndocker exec -it --user root $container /bin/bash\n"
+      fi
+    done
+  else
+    for container in $1; do
+      if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
+        echo "start container $container"
+        docker start $container > /dev/null
+        echo -e "\nShell:\ndocker exec -it --user root $container /bin/bash\n"
+      fi
+    done
+  fi
+}
+
+stop () {
+  if [ "$1" = "all" ]; then
+    for f in $MYHOME/run/*.run
+    do
+      container=${f%.run}
+      if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
+        echo "stop container $container"
+        docker stop $container > /dev/null
+      fi
+    done
+  else
+    for container in $1; do
+      if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
+        echo "stop container $container"
+        docker stop $container > /dev/null
+      fi
+    done
+  fi
+}
+
+sync () {
+  if [ "$ENV" != "prod" ]; then
+    return
+  fi
+
+  #rsync via ssh su granatellum-ftp (da dev a prod)
+
+  rsync -ah --info=progress2 /media/data01/landsupport/dev/ovecdata $DATA_PATH
+  rsync -ah --info=progress2 /media/data01/landsupport/dev/postgis-db $DATA_PATH # FERMARE CONTENITORE SU DEV!!!!!!
+  rsync -ah --info=progress2 /media/data01/landsupport/dev/apache/lib $APACHE_DATA_PATH
+  rsync -ah --info=progress2 /media/data01/landsupport/dev/apache/plugins $APACHE_DATA_PATH
+  rsync -ah --info=progress2 /media/data01/landsupport/dev/apache/resources $APACHE_DATA_PATH
+  # tmp_raster ??????
+}

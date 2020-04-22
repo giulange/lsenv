@@ -1,0 +1,9 @@
+# COMPSs
+
+docker run -d --name $container \
+--restart always \
+--mac-address=02:42:ac:12:00:06 \
+--net landsupport_bridge \
+--ip=172.18.0.6 \
+-v $DATA_PATH:/home/compss \
+-t lezzidan/tfm:1.0 > /dev/null
