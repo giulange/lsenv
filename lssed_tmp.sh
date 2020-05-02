@@ -83,6 +83,7 @@ sed -i 's/\/var\/www\/html\/root/\/var\/www\/html\/tmp/g' $GUI_PATH/plugins/land
 sed -i 's/\/var\/www\/html\/root/\/var\/www\/html\/tmp/g' $GUI_PATH/plugins/landsupport/dispatch_5_3035.php
 sed -i 's/\/var\/www\/html\/root/\/var\/www\/html\/tmp/g' $GUI_PATH/plugins/landsupport/dispatch_gs_5.php
 sed -i 's/\/var\/www\/html\/root/\/var\/www\/html\/tmp/g' $GUI_PATH/plugins/landsupport/dispatch_gl.php
+sed -i 's/\/var\/www\/html\/root/\/var\/www\/html\/tmp/g' $GUI_PATH/plugins/landsupport/dispatch_*.php
 
 # (4) useless: we now avoid ssh on local host and call a container for the execution of a CMD.
 # ./gui/landsupportgui/plugins/landsupport/dispatchmeta.php
