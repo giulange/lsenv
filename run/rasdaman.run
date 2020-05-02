@@ -4,6 +4,7 @@ vARGS="-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/
 -v $CUBER_PATH:$CUBER_PATH \
 -v $IN_RAS_DATA:/geodata \
 -v $OUT_RAS_DATA:/opt/rasdaman/data \
+-v $RAS_DB_PATH:$APACHE_ROOT_PATH/db_rasdaman \
 -v $RAS_ETC:/opt/rasdaman/etc \
 -v $RAS_LOG:/opt/rasdaman/log \
 -v $RAS_SECORE:/secore \

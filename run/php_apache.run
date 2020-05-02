@@ -9,7 +9,8 @@ vARGS="-v $APACHE_ROOT_GUI/gui/apache/opt:/opt \
 -v $APACHE_DATA_PATH/resources:$APACHE_ROOT_PATH/resources \
 -v $APACHE_STATICDATA_PATH:$APACHE_ROOT_PATH/static_rasters \
 -v $APACHE_SSD_PATH:$APACHE_ROOT_PATH/tmpraster \
--v $DATA_PATH/logs:$DATA_PATH/logs \
+-v GCI_LOG:GCI_LOG \
+-v $APACHE_METADATA_PATH:$APACHE_BASE_PATH/metadataxml \
 -v $APACHE_STD_PATH:$APACHE_ROOT_PATH/rasterdata "
 #-v $APACHE_DATA_PATH/php:/usr/local/etc/php"
 
