@@ -1,0 +1,17 @@
+#r_calc
+
+docker run -d --name $container \
+--restart always \
+#--mac-address TODO \
+--net landsupport_bridge \
+--ip=172.18.0.11 \
+-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
+-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.json:/var/www/html/docker_run.json \
+-v $CUBER_PATH:/cuber \ 
+-v $IN_RAS_DATA:/ras_data \
+-v $DATA_PATH/rasdaman/recipes:/ras_recipe \
+-v $LEGENDS_PATH:/legends \
+-v $RAM_PATH:/media/ram \
+-v $SSD_PATH:/media/ssd \
+-v $HDD_PATH:/media/hdd \
+-t $container > /dev/null

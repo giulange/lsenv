@@ -2,26 +2,31 @@
 # (The dev-GUI points to /home/release/git/LandSupport/gui/landsupportgui/)
 # (The tmp-GUI points to /home/ariespace/git/LandSupport/gui/landsupportgui/)
 
-vARGS="-v $APACHE_ROOT_GUI/gui/apache/opt:/opt \
+vARGS=" \
+-v $APACHE_ROOT_GUI/gui/apache/opt:/opt \
 -v $APACHE_ROOT_GUI/gui/landsupportgui:$APACHE_ROOT_PATH \
 -v $APACHE_DATA_PATH/lib:$APACHE_ROOT_PATH/lib \
 -v $APACHE_DATA_PATH/plugins/landsupport/lib:$APACHE_ROOT_PATH/plugins/landsupport/lib \
 -v $APACHE_DATA_PATH/resources:$APACHE_ROOT_PATH/resources \
 -v $APACHE_STATICDATA_PATH:$APACHE_ROOT_PATH/static_rasters \
--v $APACHE_SSD_PATH:$APACHE_ROOT_PATH/tmpraster \
--v GCI_LOG:GCI_LOG \
+-v $SSD_PATH:$APACHE_ROOT_PATH/tmpraster \
+-v $GCI_LOG:$GCI_LOG \
+-v $LEGENDS_PATH:$APACHE_ROOT_PATH/legends \
 -v $APACHE_METADATA_PATH:$APACHE_BASE_PATH/metadataxml \
--v $APACHE_STD_PATH:$APACHE_ROOT_PATH/rasterdata "
+-v $APACHE_STD_PATH:$APACHE_ROOT_PATH/rasterdata \
+"
 #-v $APACHE_DATA_PATH/php:/usr/local/etc/php"
 
 if [ "$ENV" = "dev" ]; then
-vARGS+=" -v $APACHE_TMP_GUI/gui/landsupportgui:$APACHE_TMP_PATH \
+vARGS+=" \
+-v $APACHE_TMP_GUI/gui/landsupportgui:$APACHE_TMP_PATH \
 -v $APACHE_DATA_PATH/lib:$APACHE_TMP_PATH/lib \
 -v $APACHE_DATA_PATH/plugins/landsupport/lib:$APACHE_TMP_PATH/plugins/landsupport/lib \
 -v $APACHE_DATA_PATH/resources:$APACHE_TMP_PATH/resources \
 -v $APACHE_STATICDATA_PATH:$APACHE_TMP_PATH/static_rasters \
--v $APACHE_SSD_PATH:$APACHE_TMP_PATH/tmpraster \
--v $APACHE_STD_PATH:$APACHE_TMP_PATH/rasterdata "
+-v $SSD_PATH:$APACHE_TMP_PATH/tmpraster \
+-v $APACHE_STD_PATH:$APACHE_TMP_PATH/rasterdata \
+"
 fi
 
 #echo -e "vARGS:\n\n$vARGS\n\n" | sed 's/ -v/\n-v/g' # for test only

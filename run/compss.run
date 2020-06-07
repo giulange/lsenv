@@ -5,5 +5,12 @@ docker run -d --name $container \
 --mac-address=02:42:ac:12:00:06 \
 --net landsupport_bridge \
 --ip=172.18.0.6 \
--v $DATA_PATH:/home/compss \
--t lezzidan/tfm:1.0 > /dev/null
+-p46300:46300 \
+-p46301:46301 \
+-v $RAM_PATH:/media/ram \
+-v $SSD_PATH:/media/ssd \
+-v $HDD_PATH:/media/hdd \
+-v $COMPSS_LIB:/home/lib \
+-v $MODEL_PATH:$APACHE_ROOT_PATH/models \
+-t $container > /dev/null
+

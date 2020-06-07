@@ -1,0 +1,30 @@
+# jupyter : to develop python code, in particular for PPProcessors 
+# https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html
+
+vARGS=" \
+-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
+-v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
+-v /home/release/git/jupy-landsupport:/home/jovyan/work/repo \
+-v $DATA_PATH:/home/jovyan/work/GFTP \
+-v $SSD_PATH:/home/jovyan/work/SSD \
+-v $RAM_PATH:/home/jovyan/work/RAM \
+"
+
+docker run -d --name $container \
+--restart always \
+--net landsupport_bridge \
+$vARGS \
+--mac-address 12:32:bc:32:00:13 \
+--ip=172.18.0.89 \
+-p 8889:8888 \
+-p 8094:80 \
+-e JUPYTER_TOKEN=landsupport2 \
+-t jupyter_test > /dev/null
+
+
+#-e NB_USER=release \
+#-e NB_UID=3007 \
+#-e NB_GID=3003 \
+#-v /home/giuliano.langella/jupyter_docker_ls_folder:/home/jovyan/work/giulianoL \ 
+#-v /home/daniele.dallatorre/resources:/home/jovyan/work/danieleDT \
+#-v $APACHE_DATA_PATH/resources:$APACHE_ROOT_PATH/resources \

@@ -1,26 +1,21 @@
-# Cuda
+# TFM
 
 vARGS=" \
 -v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
 -v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
--v $DATA_PATH/cuda_calc/gdal_src:$APACHE_ROOT_PATH/gdal_src \
 -v $RAM_PATH:/media/ram \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
--v $MODEL_PATH:/models \
+-v $BRANCH_PATH/granules/TFM:$BRANCH_PATH/granules/TFM \
 "
 
 docker run -d --name $container \
 --restart always \
---mac-address 02:42:ac:12:00:08 \
+--mac-address 02:42:ac:12:00:10 \
 --net landsupport_bridge \
---ip=172.18.0.8 \
---gpus all \
+--ip=172.18.0.10 \
 $vARGS \
--p 8085:80 \
 -t $container > /dev/null
 
 
-
-#-v $SSD_PATH:$APACHE_ROOT_PATH/tmpraster \
-#-v $APACHE_STD_PATH:$APACHE_ROOT_PATH/rasterdata \
+# -v $MODEL_PATH:/models \

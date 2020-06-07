@@ -1,0 +1,40 @@
+# jupyter : to develop python code, in particular for PPProcessors 
+# https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html
+
+CONTAINER_USER=release # release
+
+vARGS=" \
+-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
+-v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
+-v /home/release/git/jupy-landsupport:/home/$CONTAINER_USER/work/repo \
+-v $DATA_PATH:/home/$CONTAINER_USER/work/GFTP \
+-v $SSD_PATH:/home/$CONTAINER_USER/work/SSD \
+-v $RAM_PATH:/home/$CONTAINER_USER/work/RAM \
+"
+
+docker run -d --name $container \
+--restart always \
+--net landsupport_bridge \
+$vARGS \
+--mac-address 12:32:bc:32:00:14 \
+--ip=172.18.0.90 \
+-p 8890:8888 \
+-p 8095:80 \
+--user root \
+-w /home/$NB_USER \
+-e CHOWN_HOME=yes \
+-e NB_USER=release \
+-e NB_UID=3007 \
+-e NB_GID=3003 \
+-e JUPYTER_TOKEN=landsupport3 \
+-t $container > /dev/null
+
+#--user root \
+#-w /home/$NB_USER \
+#-e CHOWN_HOME=yes \
+#-e NB_USER=release \
+#-e NB_UID=3007 \
+#-e NB_GID=3003 \
+#-v /home/giuliano.langella/jupyter_docker_ls_folder:/home/jovyan/work/giulianoL \ 
+#-v /home/daniele.dallatorre/resources:/home/jovyan/work/danieleDT \
+#-v $APACHE_DATA_PATH/resources:$APACHE_ROOT_PATH/resources \

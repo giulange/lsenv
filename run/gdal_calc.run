@@ -1,13 +1,21 @@
 # GDAL
+# notes on the container:
+# install:
+#  > yum install screen
+#  > python & gdal
 
-vARGS="-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
+vARGS=" \
+-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
 -v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
 -v $DATA_PATH/cuda_calc/gdal_src:$APACHE_ROOT_PATH/gdal_src \
--v $APACHE_SSD_PATH:$APACHE_ROOT_PATH/tmpraster \
+-v $RAM_PATH:/media/ram \
+-v $SSD_PATH:/media/ssd \
+-v $HDD_PATH:/media/hdd \
 -v $APACHE_STD_PATH:$APACHE_ROOT_PATH/rasterdata \
 -v $DATA_PATH/db:$DATA_PATH/db \
 -v $RAS_DB_PATH:$APACHE_ROOT_PATH/db_rasdaman \
--v $MODEL_PATH:$APACHE_ROOT_PATH/models"
+-v $MODEL_PATH:$APACHE_ROOT_PATH/models \
+"
 
 docker run -d --name $container \
 --restart always \
