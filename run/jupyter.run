@@ -1,13 +1,15 @@
 # jupyter : to develop python code, in particular for PPProcessors 
 # https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html
 
+CONTAINER_USER=release # release
+
 vARGS=" \
 -v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
 -v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
--v /home/release/git/jupy-landsupport:/home/jovyan/work/repo \
--v $DATA_PATH:/home/jovyan/work/GFTP \
--v $SSD_PATH:/home/jovyan/work/SSD \
--v $RAM_PATH:/home/jovyan/work/RAM \
+-v /home/release/git/jupy-landsupport:/home/$CONTAINER_USER/work/repo \
+-v $DATA_PATH:/home/$CONTAINER_USER/work/GFTP \
+-v $SSD_PATH:/home/$CONTAINER_USER/work/SSD \
+-v $RAM_PATH:/home/$CONTAINER_USER/work/RAM \
 "
 
 docker run -d --name $container \
@@ -18,10 +20,18 @@ $vARGS \
 --ip=172.18.0.88 \
 -p 8888:8888 \
 -p 8093:80 \
+--user root \
+-w /home/$NB_USER \
+-e CHOWN_HOME=yes \
+-e NB_USER=release \
+-e NB_UID=3007 \
+-e NB_GID=3003 \
 -e JUPYTER_TOKEN=landsupport \
 -t $container > /dev/null
 
-
+#--user root \
+#-w /home/$NB_USER \
+#-e CHOWN_HOME=yes \
 #-e NB_USER=release \
 #-e NB_UID=3007 \
 #-e NB_GID=3003 \
