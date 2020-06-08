@@ -4,8 +4,6 @@
 CONTAINER_USER=release # release
 
 vARGS=" \
--v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
--v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
 -v /home/release/git/jupy-landsupport:/home/$CONTAINER_USER/work/repo \
 -v $DATA_PATH:/home/$CONTAINER_USER/work/GFTP \
 -v $SSD_PATH:/home/$CONTAINER_USER/work/SSD \
@@ -29,12 +27,5 @@ $vARGS \
 -e JUPYTER_TOKEN=landsupport \
 -t $container > /dev/null
 
-#--user root \
-#-w /home/$NB_USER \
-#-e CHOWN_HOME=yes \
-#-e NB_USER=release \
-#-e NB_UID=3007 \
-#-e NB_GID=3003 \
-#-v /home/giuliano.langella/jupyter_docker_ls_folder:/home/jovyan/work/giulianoL \ 
-#-v /home/daniele.dallatorre/resources:/home/jovyan/work/danieleDT \
-#-v $APACHE_DATA_PATH/resources:$APACHE_ROOT_PATH/resources \
+#-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
+#-v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \

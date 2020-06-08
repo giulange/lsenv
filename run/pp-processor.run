@@ -1,9 +1,10 @@
-# TFM
+# pp_processor : the brain of the whole LandSupport GCI
+#
 
 vARGS=" \
 -v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
 -v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
--v $DATA_PATH/logs/tfm:/logs \
+-v $DATA_PATH:/media/GFTP \
 -v $RAM_PATH:/media/ram \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
@@ -11,11 +12,10 @@ vARGS=" \
 "
 
 docker run -d --name $container \
---restart always \
---mac-address 02:42:ac:12:00:12 \
+--restart=always \
+--mac-address 02:42:ac:12:00:13 \
 --net landsupport_bridge \
---ip=172.18.0.12 \
+--ip=172.18.0.13 \
 $vARGS \
+-p 8094:80 \
 -t $container > /dev/null
-
-#-v $BRANCH_PATH/granules/TFM:$BRANCH_PATH/granules/TFM \

@@ -13,7 +13,7 @@ vARGS=" \
 -v $RAS_ETC:/opt/rasdaman/etc \
 -v $RAS_LOG:/opt/rasdaman/log \
 -v $RAS_SECORE:/secore \
--v $RAS_POSTGRES:/var/lib/postgresql/9.5/main \
+-v $RAS_POSTGRES:/postgres \
 "
 
 # echo -e "vARGS:\n\n$vARGS\n\n" | sed 's/ -v/\n-v/g' # for test only
@@ -28,4 +28,3 @@ docker run -d --name $container \
 -p 8092:80 \
 $vARGS \
 -t $image > /dev/null
-#-t $image /start.sh > /dev/null
