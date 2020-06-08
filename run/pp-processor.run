@@ -8,14 +8,16 @@ vARGS=" \
 -v $RAM_PATH:/media/ram \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
--v $MODEL_PATH:/models \
 "
 
 docker run -d --name $container \
---restart=always \
+--restart always \
 --mac-address 02:42:ac:12:00:13 \
 --net landsupport_bridge \
 --ip=172.18.0.13 \
 $vARGS \
 -p 8094:80 \
 -t $container > /dev/null
+
+
+#-v $BRANCH_PATH/middleware:/middleware \ 
