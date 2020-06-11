@@ -2,12 +2,12 @@
 
 docker run -d --name $container \
 --restart always \
---mac-address 02:42:ac:12:00:33 \
+--mac-address 02:42:ac:12:00:03 \
 --net landsupport_bridge \
---ip=172.18.0.33 \
+--ip=172.18.0.3 \
 -v $DATA_PATH/apache/htdocs/rasterdata:/opt/geoserver/raster_dir \
 -v $DATA_PATH/ovecdata:/opt/geoserver/data_dir \
 -v $DATA_PATH/db/vector/:/opt/geoserver/input_data \
--p 9381:8080 \
+-p 9281:8080 \
 -t $container > /dev/null
 # -t kartoza/geoserver > /dev/null
