@@ -4,6 +4,7 @@
 vARGS=" \
 -v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
 -v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
+-v $BRANCH_PATH/middleware:/middleware \
 -v $DATA_PATH:/media/GFTP \
 -v $RAM_PATH:/media/ram \
 -v $SSD_PATH:/media/ssd \
@@ -18,6 +19,3 @@ docker run -d --name $container \
 $vARGS \
 -p 8094:80 \
 -t $container > /dev/null
-
-
-#-v $BRANCH_PATH/middleware:/middleware \ 

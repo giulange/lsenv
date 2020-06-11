@@ -1,16 +1,20 @@
 #|/bin/bash
+#
+# CALL FROM THE GUI_PATH folder, otherwise the tag is not written:
+#  cd /home/$1/git/LandSupport
+#  /opt/lsenv/lssed_dev.sh release # in case .05. below
 
 # ATTENTION:
-# Before to change the script, ensure that the cycles described in NOTES is still valid.
+# Before to change the script, ensure that the cycles described in NOTES are still valid.
 
 # NOTES
 # The cycles of SED scripts is as follow:
-# from DEV-ENV/release   to   PROD-ENV/lspros: landsupport_sed_prod.sh
-# from DEV-ENV/ariespace to   PROD-ENV/lspros: landsupport_sed_prod.sh
-# to   DEV-ENV/ariespace from PROD-ENV/lspros: landsupport_sed_tmp.sh
-# to   DEV-ENV/release   from PROD-ENV/lspros: landsupport_sed_dev.sh
-# from DEV-ENV/ariespace to   DEV-ENV/release: landsupport_sed_dev.sh
-# to   DEV-ENV/ariespace from DEV-ENV/release: landsupport_sed_tmp.sh
+# .01. from DEV-ENV/release   to   PROD-ENV/lspros: lssed_prod.sh
+# .02. from DEV-ENV/ariespace to   PROD-ENV/lspros: lssed_prod.sh
+# .03. to   DEV-ENV/ariespace from PROD-ENV/lspros: lssed_tmp.sh
+# .04. to   DEV-ENV/release   from PROD-ENV/lspros: lssed_dev.sh
+# .05. from DEV-ENV/ariespace to   DEV-ENV/release: lssed_dev.sh
+# .06. to   DEV-ENV/ariespace from DEV-ENV/release: lssed_tmp.sh
 
 # PARAMETERS:
 #USER_PROD_HOME=lsprod
@@ -67,7 +71,7 @@ sed -i 's/geoserver.landsupport.eu/geodev.landsupport.eu/g' $GUI_PATH/plugins/la
 sed -i 's/geoserver.landsupport.eu/geodev.landsupport.eu/g' $GUI_PATH/server/req.php
 
 # (3) switch apache web application:
-# grep -inR "/var/www/html/root" --include \*.php ./
+# grep -inR "/var/www/html/tmp" --include \*.php ./gui/landsupportgui/plugins/landsupport
 #sed -i 's/\/var\/www\/html\/$APACHE_ROOT_PATH/\/var\/www\/html\/$APACHE_ROOT_PATH/g' $GUI_PATH/plugins/landsupport/landsupport.php
 #sed -i 's/\/var\/www\/html\/$APACHE_ROOT_PATH/\/var\/www\/html\/$APACHE_ROOT_PATH/g' $GUI_PATH/plugins/landsupport/dispatchmeta.php
 #sed -i 's/\/var\/www\/html\/$APACHE_ROOT_PATH/\/var\/www\/html\/$APACHE_ROOT_PATH/g' $GUI_PATH/plugins/landsupport/dispatch.php

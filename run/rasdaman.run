@@ -13,7 +13,7 @@ vARGS=" \
 -v $RAS_ETC:/opt/rasdaman/etc \
 -v $RAS_LOG:/opt/rasdaman/log \
 -v $RAS_SECORE:/secore \
--v $RAS_POSTGRES:/postgres \
+-v $RAS_POSTGRES:/data/petascope \
 "
 
 # echo -e "vARGS:\n\n$vARGS\n\n" | sed 's/ -v/\n-v/g' # for test only

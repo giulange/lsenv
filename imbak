@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# this script commit the selected image and save it as tar.gz file.
+# The lsenv program use this image for future reference in build procedures (instead of the standard dockerfile)
+
+
+#docker commit -p -a "Francesco & Giuliano <glangella@unina.it>" $1 $1
+#docker save $1 | gzip > /opt/lsenv/docker_images/$1_save.tar.gz
+
