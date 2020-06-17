@@ -23,7 +23,7 @@ $vARGS \
 -e CHOWN_HOME=yes \
 -e NB_USER=release \
 -e NB_UID=3007 \
--e NB_GID=3003 \
+-e NB_GID=3007 \
 -e JUPYTER_TOKEN=landsupport \
 -t $container > /dev/null
 
