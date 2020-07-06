@@ -6,6 +6,7 @@ docker run -d --name $container \
 --net landsupport_bridge \
 --ip=172.18.0.5 \
 -v $DATA_PATH/postgis-db:/var/lib/postgresql/data \
+-v $DATA_PATH/share:/share \
 -p 5432:5432 \
 -e POSTGRES_PASSWORD=4set2000 \
 -t $container > /dev/null
