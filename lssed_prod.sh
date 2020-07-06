@@ -1,4 +1,8 @@
 #|/bin/bash
+#
+# CALL FROM THE GUI_PATH folder, otherwise the tag is not written:
+#  cd /home/$1/git/LandSupport
+#  /opt/lsenv/lssed_dev.sh release # in case .05. below
 
 # ATTENTION:
 # Before to change the script, ensure that the cycles described in NOTES is still valid.
@@ -50,6 +54,8 @@ sed -i 's/rasdev.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/lan
 sed -i 's/rasdev.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/wcps.php
 sed -i 's/rasdev.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/dispatchmeta.php
 sed -i 's/rasdev.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/dispatchlib.php
+sed -i 's/rasdev.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/landsupport.php
+
 
 # (2-a) client geoserver:
 # grep -inR "geoserver.landsupport" --include \*.json ./
@@ -97,4 +103,12 @@ sed -i 's/\/var\/www\/html\/tmp/\/var\/www\/html\/root/g' $GUI_PATH/plugins/land
 #sed -i 's/$USER_DEV_HOME\@192\.168\.$IP_DEV\.11/$USER_PROD_HOME\@192\.168\.$IP_PROD\.11/g' $GUI_PATH/plugins/landsupport/dispatchgen.php
 #sed -i 's/$USER_DEV_HOME\@192\.168\.$IP_DEV\.11/$USER_PROD_HOME\@192\.168\.$IP_PROD\.11/g' $GUI_PATH/plugins/landsupport/dispatchmeta.php
 #sed -i 's/$USER_DEV_HOME\@192\.168\.$IP_DEV\.11/$USER_PROD_HOME\@192\.168\.$IP_PROD\.11/g' $GUI_PATH/plugins/landsupport/dispatchlib.php
+
+
+# (6) main web application URL
+# grep -inR "dev.landsupport.eu" --include \*.php ~/git/LandSupport/gui/landsupportgui/plugins/
+sed -i 's/dev.landsupport.eu/app.landsupport.eu/g' $GUI_PATH/plugins/landsupport/landsupport.php
+sed -i 's/dev.landsupport.eu/app.landsupport.eu/g' $GUI_PATH/plugins/join/join.php
+
+
 
