@@ -54,7 +54,7 @@ sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/l
 sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/wcps.php
 sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/dispatchmeta.php
 sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/dispatchlib.php
-sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/landsupport.php
+sed -i 's/rasdev.landsupport.eu/rasdev.landsupport.eu/g' $GUI_PATH/plugins/landsupport/landsupport.php
 
 # (2-a) client geoserver:
 # grep -inR "geoserver.landsupport" --include \*.json ./
