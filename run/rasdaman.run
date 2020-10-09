@@ -1,19 +1,38 @@
 # Rasdaman
+#  /media/GFTP/landsupport/rasdaman
+#    |__ data
+#        |__ petascope [postgres]
+#        |__ rasdaman
+#        |__ secore
+#    |__ rasfiles
+#        |__ log
+#        |__ settings
+#    |__ recipes
+#
+# Heavy data is only the following, which can be on NFS and the all other stuff locally:
+#  /media/GFTP/landsupport/rasdaman
+#    |__ data
+#        |__ rasdaman
+#            |__ TILES
 
+# TMP:
+OUT_RAS_DATA=/rasdaman-2/data
+RAS_RECIPE=/rasdaman-2/recipes
+RAS_FILES=/rasdaman-2/rasfiles
+RAS_TILES=
+
+# BINDINGS:
 vARGS=" \
 -v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
 -v $CUBER_PATH:$CUBER_PATH \
--v $IN_RAS_DATA:/geodata \
 -v $RAM_PATH:/media/ram \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
--v $OUT_RAS_DATA:/opt/rasdaman/data \
 -v $RAS_DB_PATH:$APACHE_ROOT_PATH/db_rasdaman \
--v $DATA_PATH/rasdaman/recipes:$RAS_RECIPE \
--v $RAS_ETC:/opt/rasdaman/etc \
--v $RAS_LOG:/opt/rasdaman/log \
--v $RAS_SECORE:/secore \
--v $RAS_POSTGRES:/data/petascope \
+-v $IN_RAS_DATA:/geodata \
+-v $OUT_RAS_DATA:/data \
+-v $RAS_RECIPE:/ras_recipe \
+-v $RAS_FILES:/rasfiles \
 "
 
 # echo -e "vARGS:\n\n$vARGS\n\n" | sed 's/ -v/\n-v/g' # for test only
@@ -29,3 +48,9 @@ docker run -d --name $container \
 -p 7000:7100 \
 $vARGS \
 -t $image > /dev/null
+
+#-v $RAS_ETC:/opt/rasdaman/etc \
+#-v $RAS_LOG:/opt/rasdaman/log \
+#-v $RAS_SECORE:/secore \
+#-v $RAS_POSTGRES:/data/petascope \
+

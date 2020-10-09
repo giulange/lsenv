@@ -9,7 +9,7 @@ vARGS=" \
 -v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
 -v $BRANCH_PATH/middleware:/middleware \
 -v $DATA_PATH:$DATA_PATH \
--v $DATA_PATH/rasdaman/recipes:$RAS_RECIPE \
+-v $DATA_PATH/rasdaman/recipes:/ras_recipe \
 -v $RAM_PATH:/media/ram \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
