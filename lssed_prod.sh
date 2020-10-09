@@ -1,6 +1,6 @@
 #|/bin/bash
 #
-# CALL FROM THE GUI_PATH folder, otherwise the tag is not written:
+# CALL FROM THE GIT_PATH folder, otherwise the tag is not written:
 #  cd /home/$1/git/LandSupport
 #  /opt/lsenv/lssed_dev.sh release # in case .05. below
 
