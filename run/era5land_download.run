@@ -1,6 +1,8 @@
 vARGS=" \
 -v $IN_RAS_DATA:/geodata \
--v /home/release/git/LandSupport/middleware/dockerfiles/era5_land_reanalysis/scripts:/home/landsupport/scripts \
+-v /home/release/git/LandSupport/middleware/dockerfiles/era5_land_reanalysis/era5-land:/home/landsupport/era5-land \
+-v /home/release/git/LandSupport/middleware/dockerfiles/era5_land_reanalysis/cosmo-leps:/home/landsupport/cosmo-leps \
+-v /media/GFTP/landsupport/era5land_download/logs:/logs \
 "
 
 docker run -d --name $container \
