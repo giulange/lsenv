@@ -31,19 +31,11 @@
 #    |__ recipes
 
 # TMP:
-# === DEV ===
-LOCAL_RAS_PATH="/media/GFTP/landsupport/rasdaman"    # on local  drive, faster
-#REMOTE_RAS_PATH="/media/GFTP/landsupport/rasdaman-2" # on remote drive, slower
-OUT_RAS_DATA="$LOCAL_RAS_PATH/data"
-RAS_RECIPE="$LOCAL_RAS_PATH/recipes"
-RAS_FILES="$LOCAL_RAS_PATH/rasfiles"
-#RAS_TILES="$LOCAL_RAS_PATH/data/rasdaman/TILES"     # via NFS, slower but unbounded in size (180TB)
-# === PROD ===
-#LOCAL_PATH="/media/hdd/rasdaman" # on local drive, faster
-#OUT_RAS_DATA="$LOCAL_PATH/rasdaman-2/data"
-#RAS_RECIPE="$LOCAL_PATH/rasdaman-2/recipes"
-#RAS_FILES="$LOCAL_PATH/rasdaman-2/rasfiles"
-#RAS_TILES="/media/GFTP/landsupport/rasdaman-2/data/rasdaman/TILES" # via NFS, slower but unbounded in size (180TB)
+LOCAL_PATH="/media/hdd/rasdaman"
+OUT_RAS_DATA="$LOCAL_PATH/rasdaman-2/data"
+RAS_RECIPE="$LOCAL_PATH/rasdaman-2/recipes"
+RAS_FILES="$LOCAL_PATH/rasdaman-2/rasfiles"
+RAS_TILES="/media/GFTP/landsupport/rasdaman-2/data/rasdaman/TILES"
 
 # BINDINGS:
 vARGS=" \
@@ -57,8 +49,8 @@ vARGS=" \
 -v $OUT_RAS_DATA:/data \
 -v $RAS_RECIPE:/ras_recipe \
 -v $RAS_FILES:/rasfiles \
+-v $RAS_TILES:/rastiles \
 "
-#-v $RAS_TILES:/rastiles \
 
 # echo -e "vARGS:\n\n$vARGS\n\n" | sed 's/ -v/\n-v/g' # for test only
 docker run -d --name $container \
