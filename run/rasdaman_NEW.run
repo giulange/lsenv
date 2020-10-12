@@ -1,4 +1,6 @@
 # Rasdaman
+# === NEW TREE ===
+#
 # CONFIG #1 :: all in NFS mount
 #  /media/GFTP/landsupport/rasdaman
 #    |__ data
@@ -27,6 +29,8 @@
 #    |__ data
 #        |__ petascope [postgres]
 #        |__ rasdaman
+#            |__ TRANSACTIONS
+#            |__ RASBASE
 #        |__ secore
 #    |__ rasfiles
 #        |__ log
@@ -51,15 +55,15 @@
 
 # TMP:
 # === DEV ===
-BASE_RAS_PATH="/media/GFTP/landsupport/rasdaman"        # symbolic link to local / NFS [hope should work!]
-#"/media/GFTP/landsupport/rasdaman-2"     # full  instance, NFS,   new tree => rasdaman_NEW.run 
-#"/media/GFTP/landsupport/rasdaman-local" # full  instance, local, old tree => rasdaman_OLD.run
-#"/media/GFTP/landsupport/rasdaman-empty" # empty instance, NFS,   new tree => rasdaman_NEW.run
-
-OUT_RAS_DATA="$BASE_RAS_PATH/data"
-RAS_RECIPE="$BASE_RAS_PATH/recipes"
-RAS_FILES="$BASE_RAS_PATH/rasfiles"
+# BASE_RAS_PATH="/media/GFTP/landsupport/rasdaman"  # symbolic link to local / NFS [hope should work!]
+#"/media/GFTP/landsupport/rasdaman-2"               # full  instance, NFS,   new tree => rasdaman_NEW.run 
+#"/media/GFTP/landsupport/rasdaman-local"           # full  instance, local, old tree => rasdaman_OLD.run
+#"/media/GFTP/landsupport/rasdaman-empty"           # empty instance, NFS,   new tree => rasdaman_NEW.run
+#OUT_RAS_DATA="$BASE_RAS_PATH/data"
+#RAS_RECIPE="$BASE_RAS_PATH/recipes"
+#RAS_FILES="$BASE_RAS_PATH/rasfiles"
 #RAS_TILES="$BASE_RAS_PATH/data/rasdaman/TILES"     # via NFS, slower but unbounded in size (180TB)
+
 # === PROD ===
 #LOCAL_PATH="/media/hdd/rasdaman" # on local drive, faster
 #OUT_RAS_DATA="$LOCAL_PATH/rasdaman-2/data"
@@ -77,10 +81,12 @@ vARGS=" \
 -v $RAS_DB_PATH:$APACHE_ROOT_PATH/db_rasdaman \
 -v $IN_RAS_DATA:/geodata \
 -v $OUT_RAS_DATA:/data \
--v $RAS_RECIPE:/ras_recipe \
 -v $RAS_FILES:/rasfiles \
+-v $RAS_RECIPE:/ras_recipe \
 "
+
 #-v $RAS_TILES:/rastiles \
+
 
 # echo -e "vARGS:\n\n$vARGS\n\n" | sed 's/ -v/\n-v/g' # for test only
 docker run -d --name $container \

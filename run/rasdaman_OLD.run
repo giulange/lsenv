@@ -1,5 +1,16 @@
 # Rasdaman
+# === OLD TREE ===
+#
+# /media/GFTP/landsupport/rasdaman
+#   |__ data
+#   |__ etc
+#   |__ log
+#   |__ postgres
+#   |__ secore
+#   |__ recipes
 
+
+# BINDINGS:
 vARGS=" \
 -v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
 -v $CUBER_PATH:$CUBER_PATH \
@@ -7,15 +18,18 @@ vARGS=" \
 -v $RAM_PATH:/media/ram \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
--v $OUT_RAS_DATA:/opt/rasdaman/data \
 -v $RAS_DB_PATH:$APACHE_ROOT_PATH/db_rasdaman \
--v $DATA_PATH/rasdaman/recipes:$RAS_RECIPE \
+-v $OUT_RAS_DATA:/opt/rasdaman/data \
 -v $RAS_ETC:/opt/rasdaman/etc \
 -v $RAS_LOG:/opt/rasdaman/log \
--v $RAS_SECORE:/data/secore \
 -v $RAS_POSTGRES:/data/petascope \
+-v $RAS_SECORE:/data/secore \
+-v $RAS_RECIPE:/ras_recipe \
 "
+
 #-v $RAS_TILES:/rastiles \
+#-v $RAS_SECORE:/secore \
+
 
 # echo -e "vARGS:\n\n$vARGS\n\n" | sed 's/ -v/\n-v/g' # for test only
 docker run -d --name $container \
@@ -32,7 +46,4 @@ $vARGS \
 -t $image > /dev/null
 
 
-#-v $RAS_ETC:/opt/rasdaman/etc \
-#-v $RAS_LOG:/opt/rasdaman/log \
-#-v $RAS_SECORE:/secore \
-#-v $RAS_POSTGRES:/data/petascope \
+
