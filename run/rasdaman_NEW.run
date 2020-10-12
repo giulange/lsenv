@@ -4,6 +4,9 @@
 #    |__ data
 #        |__ petascope [postgres]
 #        |__ rasdaman
+#            |__ TILES
+#            |__ TRANSACTIONS
+#            |__ RASBASE
 #        |__ secore
 #    |__ rasfiles
 #        |__ log
@@ -29,11 +32,30 @@
 #        |__ log
 #        |__ settings
 #    |__ recipes
+#
+# CONFIG #3 :: all in local partition
+#  /media/hdd/rasdaman [PROD, 22TB]
+#  /media/GFTP/landsupport/rasdaman [DEV, 2TB]
+#    |__ data
+#        |__ petascope [postgres]
+#        |__ rasdaman
+#            |__ TILES
+#            |__ TRANSACTIONS
+#            |__ RASBASE
+#        |__ secore
+#    |__ rasfiles
+#        |__ log
+#        |__ settings
+#    |__ recipes
+
 
 # TMP:
 # === DEV ===
-#BASE_RAS_PATH="/media/GFTP/landsupport/rasdaman"    # on local  drive, faster
-BASE_RAS_PATH="/media/GFTP/landsupport/rasdaman-2" # on remote drive, slower
+BASE_RAS_PATH="/media/GFTP/landsupport/rasdaman"        # symbolic link to local / NFS [hope should work!]
+#"/media/GFTP/landsupport/rasdaman-2"     # full  instance, NFS,   new tree => rasdaman_NEW.run 
+#"/media/GFTP/landsupport/rasdaman-local" # full  instance, local, old tree => rasdaman_OLD.run
+#"/media/GFTP/landsupport/rasdaman-empty" # empty instance, NFS,   new tree => rasdaman_NEW.run
+
 OUT_RAS_DATA="$BASE_RAS_PATH/data"
 RAS_RECIPE="$BASE_RAS_PATH/recipes"
 RAS_FILES="$BASE_RAS_PATH/rasfiles"
