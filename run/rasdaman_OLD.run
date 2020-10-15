@@ -41,7 +41,7 @@ docker run -d --name $container \
 -p 8090:9009 \
 -p 8091:9010 \
 -p 8092:80 \
--p 7000:7100 \
+-p 7000-7100:7000-7100/tcp \
 $vARGS \
 -t $image > /dev/null
 
