@@ -1,0 +1,17 @@
+# docker run -d -p 8000:8000 --name cron twistify/crontab-ui
+
+vARGS=" \
+-v $DATA_PATH:/GFTP
+"
+#-v $DATA_PATH/cron:/etc/crontabs \
+#-v $DATA_PATH/cron/logs:/tmp \
+
+docker run -d --name $container \
+  --restart=always \
+  -p 8001:8000 \
+  --mac-address 04:21:dd:03:11:27 \
+  --net landsupport_bridge \
+  --ip=172.18.0.59 \
+  $vARGS \
+  -t $container > /dev/null
+
