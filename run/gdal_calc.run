@@ -13,8 +13,9 @@ vARGS=" \
 -v $HDD_PATH:/media/hdd \
 -v $APACHE_STD_PATH:$APACHE_ROOT_PATH/rasterdata \
 -v $DATA_PATH/db:$DATA_PATH/db \
--v $RAS_DB_PATH:$APACHE_ROOT_PATH/db_rasdaman \
+-v $RAS_REPO_PATH:/repo \
 -v $MODEL_PATH:$APACHE_ROOT_PATH/models \
+-v /home/release/git/LandSupport/middleware/dockerfiles/era5_land_reanalysis/cosmo-leps:/home/landsupport/cosmo-leps \
 "
 
 docker run -d --name $container \

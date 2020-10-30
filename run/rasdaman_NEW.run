@@ -78,7 +78,7 @@ vARGS=" \
 -v $RAM_PATH:/media/ram \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
--v $RAS_DB_PATH:$APACHE_ROOT_PATH/db_rasdaman \
+-v $RAS_REPO_PATH:/repo \
 -v $IN_RAS_DATA:/geodata \
 -v $OUT_RAS_DATA:/data \
 -v $RAS_FILES:/rasfiles \

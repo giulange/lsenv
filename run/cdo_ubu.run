@@ -2,6 +2,7 @@
 # BINDINGS:
 vARGS=" \
 -v $IN_RAS_DATA:/geodata \
+-v /home/release/git/LandSupport/middleware/dockerfiles/cdo:/home/me/scripts \
 "
 
 docker run -d --name $container \
