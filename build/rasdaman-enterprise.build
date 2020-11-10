@@ -1,3 +1,3 @@
 # Rasdaman
 
-docker load -i $DOCKER_IMAGES_PATH/${image}_save.tar.gz
+docker load -i $DOCKER_IMAGES_PATH/$ENV/${image}_save.tar.gz

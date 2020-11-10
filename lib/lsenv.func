@@ -85,7 +85,7 @@ build () {
 }
 
 build_dir_structure () {
-  for dir in apache cubeR db docker_images ovecdata postgis-db rasdaman; do
+  for dir in apache cubeR db ovecdata postgis-db rasdaman; do
 
     if [ ! -d $DATA_PATH/$dir ]; then
       dataerr+="${dir}\n"
@@ -133,7 +133,7 @@ build_dir_structure () {
 }
 
 check_dir_structure () {
-  for dir in apache cubeR db docker_images ovecdata postgis-db rasdaman; do
+  for dir in apache cubeR db ovecdata postgis-db rasdaman; do
 
     if [ ! -d $DATA_PATH/$dir ]; then
       dataerr+="\n${dir}"
