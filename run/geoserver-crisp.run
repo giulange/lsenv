@@ -1,0 +1,11 @@
+# GeoServer [db/geoserver]
+
+docker run -d --name $container \
+--restart always \
+--net crisp_bridge \
+-v /media/GFTP/crisp/geoserver/ovecdata:/opt/geoserver/data_dir \
+-v /media/GFTP/crisp/geoserver/db:/opt/geoserver/input_data \
+-p 9282:8080 \
+-t kartoza/geoserver > /dev/null
+#-t $container > /dev/null
+
