@@ -111,4 +111,5 @@ sed -i 's/dev.landsupport.eu/app.landsupport.eu/g' $GUI_PATH/plugins/landsupport
 sed -i 's/dev.landsupport.eu/app.landsupport.eu/g' $GUI_PATH/plugins/join/join.php
 
 
-
+# (7) Jupyter config modifications across {TMP,DEV,PROD} lines
+sed -i 's/\"dev\"/\"prod\"/g' $GIT_PATH/middleware/api/PPProcessor/etc/conf/prepost_global_config.json

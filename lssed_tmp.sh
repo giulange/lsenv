@@ -107,3 +107,7 @@ sed -i 's/\/var\/www\/html\/root/\/var\/www\/html\/tmp/g' $GUI_PATH/plugins/land
 # grep -inR "tmp.landsupport.eu" --include \*.php ~/git/LandSupport/gui/landsupportgui/plugins/
 sed -i 's/app.landsupport.eu/tmp.landsupport.eu/g' $GUI_PATH/plugins/landsupport/landsupport.php
 sed -i 's/app.landsupport.eu/tmp.landsupport.eu/g' $GUI_PATH/plugins/join/join.php
+
+# (7) Jupyter config modifications across {TMP,DEV,PROD} lines
+sed -i 's/\"prod\"/\"dev\"/g' $GIT_PATH/middleware/api/PPProcessor/etc/conf/prepost_global_config.json
+
