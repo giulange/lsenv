@@ -1,0 +1,9 @@
+# PostgreSQL [db/postgres]
+
+docker run -d --name $container \
+--restart always \
+--net crisp_bridge \
+-v /media/GFTP/crisp/postgis:/var/lib/postgresql/data \
+-p 6432:5432 \
+-e POSTGRES_PASSWORD=ngYK*nPEws%gBgn4ix \
+-t mdillon/postgis > /dev/null
