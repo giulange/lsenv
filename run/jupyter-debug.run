@@ -4,7 +4,7 @@
 CONTAINER_USER=release # release
 
 vARGS=" \
--v /home/release/git/LandSupport:/home/$CONTAINER_USER/work/repo \
+-v $BRANCH_PATH:/home/$CONTAINER_USER/work/repo \
 -v $DATA_PATH:/home/$CONTAINER_USER/work/GFTP \
 -v $SSD_PATH:/home/$CONTAINER_USER/work/SSD \
 -v $RAM_PATH:/home/$CONTAINER_USER/work/RAM \

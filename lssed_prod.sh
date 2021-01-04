@@ -1,4 +1,4 @@
-#|/bin/bash
+#!/bin/bash
 #
 # CALL FROM THE GIT_PATH folder, otherwise the tag is not written:
 #  cd /home/$1/git/LandSupport
@@ -33,7 +33,7 @@ GUI_PATH=$GIT_PATH/gui/landsupportgui
 #IP_PROD=20 #192.168.20.11
 
 # (0) apply version tag to the GUI:
-git tag |  gawk  'END {print "{\"version\" : \"" $1 "\"}" }' > $GUI_PATH/plugins/landsupport/etc/version.json
+git describe --tags | gawk  'END {print "{\"version\" : \"" $1 "\"}" }' > $GUI_PATH/plugins/landsupport/etc/version.json
 
 # (1-a) client rasdaman:
 # grep -inR "rasdaman.landsupport" --include \*.json ./

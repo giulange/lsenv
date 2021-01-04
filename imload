@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# here an example of loading a tar.gz saved image is shown.
+
+# docker load --input /opt/lsenv/docker_images/dev/php_apache_save_2020-12-18T1048.tar.gz
+docker load --input /opt/lsenv/docker_images/dev/my_image_name.tar.gz
+

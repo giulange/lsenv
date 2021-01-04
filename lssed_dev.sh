@@ -33,8 +33,7 @@ GUI_PATH=$GIT_PATH/gui/landsupportgui
 #IP_PROD=20 #192.168.20.11
 
 # (0) apply version tag to the GUI:
-git tag |  gawk  'END {print "{\"version\" : \"" $1 "\"}" }' > $GUI_PATH/plugins/landsupport/etc/version.json
-
+git describe --tags | gawk  'END {print "{\"version\" : \"" $1 "\"}" }' > $GUI_PATH/plugins/landsupport/etc/version.json
 # (1-a) client rasdaman:
 # grep -inR "rasdaman.landsupport" --include \*.json ./
 # 		https://rasdaman.landsupport.eu/rasdaman/ows (not rasdev, untill a copy of data is in rasdev)
