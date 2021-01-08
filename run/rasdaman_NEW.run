@@ -90,6 +90,7 @@ vARGS=" \
 
 # echo -e "vARGS:\n\n$vARGS\n\n" | sed 's/ -v/\n-v/g' # for test only
 docker run -d --name $container \
+--shm-size=188g \
 --restart=always \
 --mac-address 02:42:ac:12:00:04 \
 --net landsupport_bridge \
