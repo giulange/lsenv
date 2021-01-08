@@ -38,7 +38,7 @@ git describe --tags | gawk  'END {print "{\"version\" : \"" $1 "\"}" }' > $GUI_P
 # grep -inR "rasdaman.landsupport" --include \*.json ./
 # 		https://rasdaman.landsupport.eu/rasdaman/ows (not rasdev, untill a copy of data is in rasdev)
 #sed -i 's/$RAS_PUB_URL_PROD/$RAS_PUB_URL_PROD/g' $GUI_PATH/etc/datasets.json
-sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/etc/datasets.json
+sed -i 's/rasdaman.landsupport.eu/rasdev.landsupport.eu/g' $GUI_PATH/etc/datasets.json
 
 # (1-b) server rasdaman:
 # grep -inR "rasdaman.landsupport" --include \*.php ./
@@ -48,12 +48,12 @@ sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/etc/datas
 #sed -i 's/$RAS_PUB_URL_PROD/$RAS_PUB_URL_PROD/g' $GUI_PATH/plugins/landsupport/wcps.php
 #sed -i 's/$RAS_PUB_URL_PROD/$RAS_PUB_URL_PROD/g' $GUI_PATH/plugins/landsupport/dispatchmeta.php
 #sed -i 's/$RAS_PUB_URL_PROD/$RAS_PUB_URL_PROD/g' $GUI_PATH/plugins/landsupport/dispatchlib.php
-sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/ls_describe.php
-sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/respatch.php
-sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/wcps.php
-sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/dispatchmeta.php
-sed -i 's/rasdaman.landsupport.eu/rasdaman.landsupport.eu/g' $GUI_PATH/plugins/landsupport/dispatchlib.php
-sed -i 's/rasdev.landsupport.eu/rasdev.landsupport.eu/g' $GUI_PATH/plugins/landsupport/landsupport.php
+sed -i 's/rasdaman.landsupport.eu/rasdev.landsupport.eu/g' $GUI_PATH/plugins/landsupport/ls_describe.php
+sed -i 's/rasdaman.landsupport.eu/rasdev.landsupport.eu/g' $GUI_PATH/plugins/landsupport/respatch.php
+sed -i 's/rasdaman.landsupport.eu/rasdev.landsupport.eu/g' $GUI_PATH/plugins/landsupport/wcps.php
+sed -i 's/rasdaman.landsupport.eu/rasdev.landsupport.eu/g' $GUI_PATH/plugins/landsupport/dispatchmeta.php
+sed -i 's/rasdaman.landsupport.eu/rasdev.landsupport.eu/g' $GUI_PATH/plugins/landsupport/dispatchlib.php
+sed -i 's/rasdaman.landsupport.eu/rasdev.landsupport.eu/g' $GUI_PATH/plugins/landsupport/landsupport.php
 
 # (2-a) client geoserver:
 # grep -inR "geoserver.landsupport" --include \*.json ./
