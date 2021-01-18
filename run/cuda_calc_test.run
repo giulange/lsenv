@@ -1,0 +1,24 @@
+# Cuda
+
+vARGS=" \
+-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
+-v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
+-v $DATA_PATH/cuda_calc/gdal_src:$APACHE_ROOT_PATH/gdal_src \
+-v $RAM_PATH:/media/ram \
+-v $SSD_PATH:/media/ssd \
+-v $HDD_PATH:/media/hdd \
+-v $MODEL_PATH:/models \
+-v $DATA_PATH:$DATA_PATH \
+"
+
+docker run -d --name $container \
+--restart always \
+--net landsupport_bridge \
+--gpus all \
+$vARGS \
+-t cuda_calc > /dev/null
+
+
+
+#-v $SSD_PATH:$APACHE_ROOT_PATH/tmpraster \
+#-v $APACHE_STD_PATH:$APACHE_ROOT_PATH/rasterdata \
