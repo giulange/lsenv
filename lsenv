@@ -3,9 +3,9 @@
 # Init the LandSupport GCI in DEV ENV / PROD
 # NOTES:
 # You have to launch THIS script from within the LandSupport/env/dev folder.
-# RICORDIAMOCI CHE @Francesco: 
+# RICORDIAMOCI CHE @Francesco:
 #   > aries ha iniziato a sviluppare, quindi prima di spegnere in DEV dovremmo avvisare in Telegram
-#   > prima di sovrascrivere la PROD vecchia, 
+#   > prima di sovrascrivere la PROD vecchia,
 #________________________________________________________________________________
 
 MYHOME=$(dirname $(readlink -f $0))
@@ -46,19 +46,32 @@ if [ $(id -u -n) != "$USER_PROD" ] && [ $(id -u -n) != "$USER_DEV" ]; then
 fi
 
 if ! [[ "$1" =~ ^(build|run|start|stop|drm|drmi|deploy)$ ]]; then
-    echo -e "\nUsage:  $filename COMMAND\n\nCommands:\n  build\n  run\n  start\n  stop\n  drm\n  drmi"
+    echo -e "\nUsage:  $filename COMMAND OPTIONS container/s OR image/s OR ALL\n\nOptions:\n  -y\tdisable interactive mode\n\nCommands:\n  build\n  run\n  start\n  stop\n  drm\n  drmi"
     exit
 fi
 
 case $1 in
 
     build | run | start | stop | drm | drmi)
+    interactive=1
     command=$1
     shift
+
+    if [ "$1" = "-y" ]; then
+      interactive=0
+      shift
+    fi
+
     args="$@"
 
     if [ -z "$args" ]; then
-        args="all"
+      echo -e "\nUsage:  $filename $command container/s OR image/s OR ALL"
+      exit
+    fi
+
+    if [ $interactive = 0 ]; then
+      $command "$args"
+      exit
     fi
 
     echo -e "\n$command $args ?\n"
@@ -70,7 +83,7 @@ case $1 in
             break
             ;;
             No)
-            echo -e "\nbye!\n" 
+            echo -e "\nbye!\n"
             break
             ;;
         esac
@@ -79,9 +92,9 @@ case $1 in
 
     deploy) # CREARE ANCHE LA BACK-DEPLOY (ES. DA PROD A DEV)
     stop "all"    # it's safe for postgres
-    
+
     pushd $BRANCH_PATH > /dev/null
-    
+
     if [ -d .git ]; then # riportare all aversione precedente passando il branch come argomento
         BRANCH=$(git symbolic-ref --short HEAD)
         echo -e "use $BRANCH branch"
@@ -95,19 +108,19 @@ case $1 in
     popd > /dev/null
 
     echo -e "\nre-build landsupport docker environment ?\n"
-    
+
     select yn in "Yes" "No"; do
         case $yn in
             Yes)
             stop "all"
-	    # if /media/GFTP/landsupport not exist then rebuild images
+            # if /media/GFTP/landsupport not exist then rebuild images
             sync
-	    apply_sed # abilitarlo anche come comando
-	    run "all"
+            apply_sed # abilitarlo anche come comando
+            run "all"
             break
             ;;
-            
-            No) 
+
+            No)
             break
             ;;
         esac
@@ -117,12 +130,12 @@ case $1 in
 
   #  select yn in "Yes" "No"; do
   #      case $yn in
-  #          Yes) 
+  #          Yes)
   #          backup
   #          break
   #          ;;
-  #          
-  #          No) 
+  #
+  #          No)
   #          break
   #          ;;
   #      esac
@@ -138,4 +151,3 @@ case $1 in
     # sed -i 's/ariespace@192.168.20.11/*repalcement_user@replacement_ip*/g' *web_dir*/plugins/landsupport/dispatchmeta.php
     ;;
 esac
-

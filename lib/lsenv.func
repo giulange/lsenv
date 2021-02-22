@@ -48,23 +48,24 @@ backup () {
 build () {
   check_dir_structure
   
-  if [ "$1" = "all" ]; then
+  if [ "$1" = "ALL" ]; then
     for f in $MYHOME/build/*.build
     do
       
       container=${f%.build}
-      image=${f%.build}
+      container=${container##*/} # strip path
+      image=$container
 
       options
       drm $container
       drmi $image
 
       echo "build image $image"
-      . $MYHOME/build/$f --source-only # execute build script
+      . $f --source-only # execute build script
     
     done
   else 
-    for image in $1; do
+    for image in $@; do
       
       container=$image      
       options
@@ -156,10 +157,11 @@ create_landsupport_bridge () {
 }
 
 drm () {
-  if [ "$1" = "all" ]; then
+  if [ "$1" = "ALL" ]; then
     for f in $MYHOME/run/*.run
     do
       container=${f%.run}
+      container=${container##*/} # strip path
 
       if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
         echo "remove container $container"
@@ -167,7 +169,7 @@ drm () {
       fi
     done
   else
-    for container in $1; do
+    for container in $@; do
       if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
         echo "remove container $container"
         docker rm -f $container > /dev/null
@@ -177,26 +179,31 @@ drm () {
 }
 
 drmi () {
-  if [ "$1" = "all" ]; then
+  if [ "$1" = "ALL" ]; then
     for f in $MYHOME/build/*.build
     do
       image=${f%.build}
+      image=${image##*/} # strip path
 
       options
 
+      drm $image
+
       if [ ! -z $(docker images -q $image) ]; then
         echo "remove image $image"
-        docker rmi $image > /dev/null
+        docker rmi -f $image > /dev/null
       fi
     done
   else
-    for image in $1; do
+    for image in $@; do
 
       options
 
+      drm $image
+
       if [ ! -z $(docker images -q $image) ]; then
         echo "remove image $image"
-        docker rmi $image > /dev/null
+        docker rmi -f $image > /dev/null
       fi
     done
   fi
@@ -219,21 +226,22 @@ options () {
 run () {
   check_dir_structure
 
-  if [ "$1" = "all" ]; then
+  if [ "$1" = "ALL" ]; then
     for f in $MYHOME/run/*.run
     do
-      container=${f%.build}
-      image=${f%.build}
+      container=${f%.run}
+      container=${container##*/} # strip path
+      image=$container
       
       options
       drm $container
 
       echo "run container $container"
-      . $MYHOME/run/$f --source-only # execute run script
+      . $f --source-only # execute run script
       echo -e "\nShell:\ndocker exec -it --user root $container /bin/bash\n"
     done
   else
-    for container in $1; do
+    for container in $@; do
       if [ -f "$MYHOME/run/$container.run" ]; then
         image=$container
 
@@ -251,10 +259,11 @@ run () {
 }
 
 start () {
-  if [ "$1" = "all" ]; then
+  if [ "$1" = "ALL" ]; then
     for f in $MYHOME/run/*.run
     do
       container=${f%.run}
+      container=${container##*/} # strip path
       
       if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
         echo "start container $container"
@@ -263,7 +272,7 @@ start () {
       fi
     done
   else
-    for container in $1; do
+    for container in $@; do
       if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
         echo "start container $container"
         docker start $container > /dev/null
@@ -274,17 +283,18 @@ start () {
 }
 
 stop () {
-  if [ "$1" = "all" ]; then
+  if [ "$1" = "ALL" ]; then
     for f in $MYHOME/run/*.run
     do
       container=${f%.run}
+      container=${container##*/} # strip path
       if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
         echo "stop container $container"
         docker stop $container > /dev/null
       fi
     done
   else
-    for container in $1; do
+    for container in $@; do
       if [ ! -z $(docker ps -a -q --filter name=^/$container$) ]; then
         echo "stop container $container"
         docker stop $container > /dev/null
