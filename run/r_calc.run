@@ -12,4 +12,5 @@ docker run -d --name $container \
 -v $RAM_PATH:/media/ram \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
+-v $GCI_LOG:/logs \
 -t $container > /dev/null

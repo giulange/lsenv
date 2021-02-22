@@ -1,15 +1,20 @@
 #cubeR
 
-docker run -d --name $container \
---restart always \
---mac-address 02:42:ac:12:00:07 \
---net landsupport_bridge \
---ip=172.18.0.7 \
+vARGS=" \
 -v $CUBER_PATH:$CUBER_PATH \
 -v $IN_RAS_DATA:$IN_RAS_DATA \
 -v /home:/home \
 -v /etc/passwd:/etc/passwd:ro \
 -v /etc/group:/etc/group:ro \
 -v /etc/shadow:/etc/shadow:ro \
+-v $GCI_LOG:/logs \
+"
+
+docker run -d --name $container \
+--restart always \
+--mac-address 02:42:ac:12:00:07 \
+--net landsupport_bridge \
+--ip=172.18.0.7 \
+$vARGS \
 -p 8585:8787 \
 -t $container > /dev/null
