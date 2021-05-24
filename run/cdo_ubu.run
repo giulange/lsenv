@@ -6,10 +6,9 @@ vARGS=" \
 "
 
 docker run -d --name $container \
-  --restart always \
-  --mac-address 40:22:cc:10:20:00 \
-  --net landsupport_bridge \
-  --ip=172.18.0.57 \
-  $vARGS \
-  -t $container > /dev/null
-
+--restart always \
+--mac-address 40:22:cc:10:20:00 \
+--net landsupport_bridge \
+--ip=172.18.0.57 \
+$vARGS \
+-t $container > /dev/null

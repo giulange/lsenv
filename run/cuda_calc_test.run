@@ -8,15 +8,16 @@ vARGS=" \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
 -v $MODEL_PATH:/models \
+-v /home/federica.cavaliere/git/LandSupport/granules:/models2 \
 -v $DATA_PATH:$DATA_PATH \
 "
 
-docker run -d --name $container \
+docker run -d --name cuda_calc_test \
 --restart always \
 --net landsupport_bridge \
 --gpus all \
 $vARGS \
--t cuda_calc > /dev/null
+-t cuda_calc_test > /dev/null
 
 
 

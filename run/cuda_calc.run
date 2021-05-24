@@ -8,6 +8,7 @@ vARGS=" \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
 -v $MODEL_PATH:/models \
+-v /home/federica.cavaliere/git/LandSupport/granules:/models2 \
 -v $DATA_PATH:$DATA_PATH \
 "
 

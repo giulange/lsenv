@@ -1,0 +1,16 @@
+# docker hub at: https://hub.docker.com/r/tomdesinto/name-generator 
+
+#vARGS=" \
+#"
+#-v $DATA_PATH/cron:/etc/crontabs \
+#-v $DATA_PATH/cron/logs:/tmp \
+#-v $DATA_PATH:/GFTP
+
+docker run -d --name $container \
+--restart=always \
+-p 8199:10010 \
+--mac-address 02:42:ac:12:00:10 \
+--net landsupport_bridge \
+--ip=172.18.0.14 \
+-t $container > /dev/null
+#  $vARGS \

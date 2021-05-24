@@ -4,11 +4,12 @@
 CONTAINER_USER=release # release
 
 vARGS=" \
--v /home/release/git/jupy-landsupport:/home/$CONTAINER_USER/work/repo \
+-v /home/federica.cavaliere/git/LandSupport:/home/$CONTAINER_USER/work/repo \
 -v $DATA_PATH:/home/$CONTAINER_USER/work/GFTP \
 -v $SSD_PATH:/home/$CONTAINER_USER/work/SSD \
 -v $RAM_PATH:/home/$CONTAINER_USER/work/RAM \
 "
+#-v /home/release/git/jupy-landsupport:/home/$CONTAINER_USER/work/repo \
 
 docker run -d --name $container \
 --restart always \
@@ -22,10 +23,13 @@ $vARGS \
 -w /home/$NB_USER \
 -e CHOWN_HOME=yes \
 -e NB_USER=release \
--e NB_UID=3007 \
+-e NB_UID=3020 \
 -e NB_GID=3007 \
 -e JUPYTER_TOKEN=landsupport \
 -t $container > /dev/null
+
+#-e NB_UID=3007 \
+
 
 #-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
 #-v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \
