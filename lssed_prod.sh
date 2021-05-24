@@ -109,7 +109,10 @@ sed -i 's/\/var\/www\/html\/tmp/\/var\/www\/html\/root/g' $GUI_PATH/plugins/land
 # grep -inR "dev.landsupport.eu" --include \*.php ~/git/LandSupport/gui/landsupportgui/plugins/
 sed -i 's/dev.landsupport.eu/app.landsupport.eu/g' $GUI_PATH/plugins/landsupport/landsupport.php
 sed -i 's/dev.landsupport.eu/app.landsupport.eu/g' $GUI_PATH/plugins/join/join.php
-
+sed -i 's/dev.landsupport.eu/app.landsupport.eu/g' $GUI_PATH/plugins/join/passwordreset.php
 
 # (7) Jupyter config modifications across {TMP,DEV,PROD} lines
 sed -i 's/\"dev\"/\"prod\"/g' $GIT_PATH/middleware/api/PPProcessor/etc/conf/prepost_global_config.json
+sed -i 's/\"copyToPostgreSQL\" : \"dev\"/\"copyToPostgreSQL\" : \"prod\"/g' $GIT_PATH/middleware/api/PPProcessor/etc/conf/collaudo_config.json
+
+
