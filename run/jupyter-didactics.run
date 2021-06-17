@@ -1,0 +1,28 @@
+# jupyter : to develop web pages for didactics 
+# https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html
+
+CONTAINER_USER=release # release
+
+vARGS=" \
+-v /home/giuliano.langella:/home/$CONTAINER_USER/work/giuliano
+-v $DATA_PATH:/home/$CONTAINER_USER/work/GFTP \
+-v /media/DATI:/home/$CONTAINER_USER/work/FTP \
+"
+
+docker run -d --name $container \
+--restart always \
+--net landsupport_bridge \
+$vARGS \
+--mac-address 14:34:bd:14:02:02 \
+--ip=172.18.0.109 \
+-p 8899:8888 \
+-p 8099:80 \
+--user root \
+-w /home/$NB_USER \
+-e CHOWN_HOME=yes \
+-e NB_USER=release \
+-e NB_UID=3009 \
+-e NB_GID=3009 \
+-e JUPYTER_TOKEN=giuliano \
+-t jupyter > /dev/null
+

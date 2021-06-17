@@ -1,7 +1,9 @@
 # docker run -d -p 8000:8000 --name cron twistify/crontab-ui
 
 vARGS=" \
--v $DATA_PATH:/GFTP
+-v $DATA_PATH:/GFTP \
+-v $DATA_PATH/cron/db:/crontab-ui/crontabs/ \
+-v $DATA_PATH/cron/jobs:/etc/crontabs \
 "
 #-v $DATA_PATH/cron:/etc/crontabs \
 #-v $DATA_PATH/cron/logs:/tmp \

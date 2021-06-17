@@ -12,15 +12,13 @@ vARGS=" \
 -v $DATA_PATH:$DATA_PATH \
 "
 
-docker run -d --name cuda_calc_test \
+docker run -d --name cuda_calc_113 \
 --restart always \
---mac-address 02:42:ac:12:00:08 \
 --net landsupport_bridge \
---ip=172.18.0.48 \
 --gpus all \
 $vARGS \
--p 8085:80 \
--t cuda_calc_test > /dev/null
+-p 8088:80 \
+-t cuda_calc_113 > /dev/null
 
 
 
