@@ -1,0 +1,10 @@
+docker run -d --name $container \
+--restart always \
+--mac-address 02:42:ac:12:00:20 \
+--net landsupport_bridge \
+--ip=172.18.0.20 \
+-e ALLOW_EMPTY_PASSWORD=yes \
+-e MARIADB_USER=bn_jasperreports \
+-e MARIADB_DATABASE=bitnami_jasperreports \
+--volume $DATA_PATH/jasper/mariadb:/bitnami \
+-t bitnami/mariadb:latest > /dev/null
