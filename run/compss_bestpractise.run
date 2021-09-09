@@ -1,0 +1,21 @@
+# COMPSs
+
+vARGS=" \
+-v $RAM_PATH:/media/ram \
+-v $SSD_PATH:/media/ssd \
+-v $HDD_PATH:/media/hdd \
+-v $COMPSS_LIB:/home/lib \
+-v $MODEL_PATH:/models \
+-v $GCI_LOG/compss_bestpractise:/logs \
+"
+
+docker run -d --name $container \
+--restart always \
+--mac-address 11:11:ed:41:08:09 \
+--net landsupport_bridge \
+--ip=172.18.0.16 \
+$vARGS \
+-p46500:46500 \
+-p46402:46402 \
+-t $container > /dev/null
+
