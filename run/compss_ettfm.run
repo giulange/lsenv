@@ -11,7 +11,7 @@ vARGS=" \
 
 docker run -d --name $container \
 --restart always \
---mac-address 12:12:ad:42:09:06 \
+--mac-address 12:12:ad:42:09:04 \
 --net landsupport_bridge \
 --ip=172.18.0.15 \
 $vARGS \
