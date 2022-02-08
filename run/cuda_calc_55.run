@@ -15,6 +15,7 @@ vARGS=" \
 docker run -d --name cuda_calc_55 \
 --restart always \
 --net landsupport_bridge \
+--ip=172.18.0.60 \
 --gpus all \
 $vARGS \
 -p 8087:80 \

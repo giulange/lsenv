@@ -1,0 +1,35 @@
+# jupyter : to develop python code, in particular for PPProcessors 
+# https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html
+
+CONTAINER_USER=release # release
+
+vARGS=" \
+-v /home/annachiara.colombi/git/LandSupport:/home/$CONTAINER_USER/work/repo \
+-v $DATA_PATH:/home/$CONTAINER_USER/work/GFTP \
+-v $SSD_PATH:/home/$CONTAINER_USER/work/SSD \
+-v $RAM_PATH:/home/$CONTAINER_USER/work/RAM \
+"
+#-v /home/release/git/jupy-landsupport:/home/$CONTAINER_USER/work/repo \
+
+docker run -d --name $container \
+--restart always \
+--net landsupport_bridge \
+$vARGS \
+--mac-address 14:12:ac:30:10:12 \
+--ip=172.18.0.98 \
+-p 8999:8888 \
+-p 8095:80 \
+--user root \
+-w /home/$NB_USER \
+-e CHOWN_HOME=yes \
+-e NB_USER=release \
+-e NB_UID=3021 \
+-e NB_GID=3007 \
+-e JUPYTER_TOKEN=landsupport \
+-t jupyter > /dev/null
+
+#-e NB_UID=3007 \
+
+
+#-v $BRANCH_PATH/middleware/api/dockers_rest/docker_run.php:/var/www/html/docker_run.php \
+#-v $BRANCH_PATH/middleware/api/dockers_rest/php.ini:/etc/php.ini \

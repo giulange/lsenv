@@ -8,3 +8,4 @@ docker run -d --name $container \
 -e MARIADB_DATABASE=bitnami_jasperreports \
 --volume $DATA_PATH/jasper/mariadb:/bitnami \
 -t bitnami/mariadb:latest > /dev/null
+#-t jasper_db_bak2 > /dev/null

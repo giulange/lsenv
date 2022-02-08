@@ -10,3 +10,4 @@ docker run -d --name $container \
 -e JASPERREPORTS_DATABASE_NAME=bitnami_jasperreports \
 --volume $DATA_PATH/jasper/reports:/bitnami \
 -t bitnami/jasperreports:latest > /dev/null
+#-t jasperreport_bak2 > /dev/null

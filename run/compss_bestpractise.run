@@ -5,10 +5,11 @@ vARGS=" \
 -v $SSD_PATH:/media/ssd \
 -v $HDD_PATH:/media/hdd \
 -v $COMPSS_LIB:/home/lib \
--v /home/daniele.lezzi/Landsupport/granules:/models \
+-v $MODEL_PATH:/models \
 -v $GCI_LOG/compss_bestpractise:/logs \
 "
 #-v $MODEL_PATH:/models \
+#-v /home/daniele.lezzi/Landsupport/granules:/models \
 
 docker run -d --name $container \
 --restart always \

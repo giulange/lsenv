@@ -1,0 +1,22 @@
+# COMPSs tutorial :: Winter School 2022
+
+# token
+TOKEN=winterschool2022
+
+# shared folder:
+vARGS=" \
+-v /media/GFTP/landsupport/winterschool:/winterschool\
+"
+
+docker run -d --name $container \
+--restart always \
+--mac-address 12:02:ad:22:09:04 \
+--net landsupport_bridge \
+--ip=172.18.0.207 \
+$vARGS \
+-p 8990:8888 \
+-t compss/compss:2.10> /dev/null
+
+docker exec -it -d $container  \
+ bash -c 'jupyter notebook --allow-root --ip=compss_tutorial --NotebookApp.token=$TOKEN'
+
