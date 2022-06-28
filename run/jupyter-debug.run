@@ -18,6 +18,7 @@ $vARGS \
 --ip=172.18.0.108 \
 -p 8898:8888 \
 -p 8098:80 \
+-p 5007:5006 \
 --user root \
 -w /home/$NB_USER \
 -e CHOWN_HOME=yes \

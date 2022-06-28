@@ -3,6 +3,7 @@
 vARGS=" \
 -v $DATA_PATH/cron/db:/crontab-ui/crontabs/ \
 -v $DATA_PATH/cron/jobs:/etc/crontabs \
+-v $RAS_REPO_PATH:/repo \
 "
 #-v $DATA_PATH/cron:/etc/crontabs \
 #-v $DATA_PATH/cron/logs:/tmp \
