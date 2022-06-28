@@ -1,5 +1,9 @@
 # COMPSs tutorial :: Winter School 2022
 
+# docker
+IMAGE=compss_tutorial # compss/compss:2.10
+CONTAINER=compss_tutorial
+
 # token
 TOKEN=winterschool2022
 
@@ -15,7 +19,9 @@ docker run -d --name $container \
 --ip=172.18.0.207 \
 $vARGS \
 -p 8990:8888 \
--t compss/compss:2.10> /dev/null
+-t ${container} > /dev/null
+
+#-t compss/compss:2.10 > /dev/null
 
 docker exec -it -d $container  \
  bash -c 'jupyter notebook --allow-root --ip=compss_tutorial --NotebookApp.token=$TOKEN'
