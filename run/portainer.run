@@ -1,0 +1,18 @@
+#!/bin/bash
+
+container="portainer"
+image="portainer/portainer-ce"
+volume="portainer_data"
+
+if [ $( docker volume ls | grep $volume | wc -l ) -lt 1 ]; then
+	docker volume create $volume 
+fi
+
+docker run -d \
+	-p 8000:8000 \
+	-p 9000:9000 \
+	--name=$container \
+	--restart=always \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-v portainer_data:/data \
+	$image

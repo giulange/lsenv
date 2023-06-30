@@ -1,0 +1,15 @@
+#!/bin/bash
+
+PORT=8488
+container=mapstore
+image=geosolutionsit/mapstore2
+
+docker run \
+	-d \
+	--name $container \
+	--ip=172.18.0.30 \
+	--restart always \
+	--net landsupport_bridge \
+	-p $PORT:8080 \
+	-t \
+	$image > /dev/null
